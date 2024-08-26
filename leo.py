@@ -11,6 +11,11 @@ from plotly.subplots import make_subplots
 df = pd.read_csv('weather_data_kodaikanal_daily.csv', parse_dates=['date'])
 df.set_index('date', inplace=True)
 
+# Check if the DataFrame is empty or required columns are missing
+if df.empty or not all(col in df.columns for col in ['temperature', 'dew_point', 'humidity', 'wind_speed', 'wind_gust', 'pressure', 'precipitation']):
+    st.error("Error: Required data columns are missing or data is empty.")
+    st.stop()
+
 # Simulate plant growth data
 df['plant_growth'] = np.random.uniform(0, 10, len(df))
 
